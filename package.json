@@ -1,0 +1,46 @@
+{
+  "name": "jat-circuits",
+  "version": "0.3.0",
+  "description": "Zero-knowledge circuits for Jat private payments on Solana: Circom deposit/withdraw over a Poseidon-BN254 commitment, Groth16, matched byte for byte against the on-chain Solana Poseidon syscall.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "compile:seal": "circom circuits/seal.circom --r1cs --wasm --sym -o circuits -l node_modules",
+    "compile:withdraw": "circom circuits/withdraw.circom --r1cs --wasm --sym -o circuits -l node_modules",
+    "input:seal": "node scripts/gen_input.mjs",
+    "input:withdraw": "node scripts/gen_withdraw_input.mjs",
+    "proof:bytes": "node scripts/proof_to_bytes.mjs",
+    "vk:rust": "node scripts/vk_to_rust.mjs",
+    "e2e": "node scripts/e2e_devnet.mjs"
+  },
+  "keywords": [
+    "solana",
+    "circom",
+    "groth16",
+    "poseidon",
+    "zk",
+    "merkle-tree",
+    "privacy",
+    "shielded-pool"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jatcotcash/jat-circuits.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jatcotcash/jat-circuits/issues"
+  },
+  "homepage": "https://github.com/Jatcotcash/jat-circuits",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@solana/web3.js": "^1.98.4",
+    "circomlibjs": "^0.1.7",
+    "snarkjs": "^0.7.5"
+  },
+  "devDependencies": {
+    "circomlib": "^2.0.5"
+  }
+}
