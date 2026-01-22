@@ -1,0 +1,10 @@
+node_modules/
+
+# Powers-of-tau and intermediate proving artifacts (large, regenerable)
+*.ptau
+*_0.zkey
+*_1.zkey
+
+# transient proof inputs/outputs
+.env
+.env.*
