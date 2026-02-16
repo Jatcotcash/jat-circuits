@@ -91,3 +91,5 @@ template Seal(depth) {
     ge.in[1] <== threshold;
     ge.out === 1;
 }
+
+component main {public [merkleRoot, threshold, contextHash, nullifierHash]} = Seal(20);
