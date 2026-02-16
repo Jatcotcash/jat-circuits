@@ -40,3 +40,54 @@ template MerkleLevel() {
     h.inputs[1] <== muxR.out;
     out <== h.out;
 }
+
+template Seal(depth) {
+    // public
+    signal input merkleRoot;
+    signal input threshold;
+    signal input contextHash;
+    signal input nullifierHash;
+    // private
+    signal input value;
+    signal input label;
+    signal input secret;
+    signal input nullifier;
+    signal input pathElements[depth];
+    signal input pathIndices[depth];
+
+    // precommit = Poseidon(nullifier, secret)
+    component pc = Poseidon(2);
+    pc.inputs[0] <== nullifier;
+    pc.inputs[1] <== secret;
+
+    // leaf = Poseidon(value, label, precommit)  (3-input; value+label program-pinned)
+    component leaf = Poseidon(3);
+    leaf.inputs[0] <== value;
+    leaf.inputs[1] <== label;
+    leaf.inputs[2] <== pc.out;
+
+    // Merkle inclusion: fold leaf up the path, must equal merkleRoot
+    component levels[depth];
+    signal cur[depth + 1];
+    cur[0] <== leaf.out;
+    for (var i = 0; i < depth; i++) {
+        levels[i] = MerkleLevel();
+        levels[i].cur <== cur[i];
+        levels[i].sibling <== pathElements[i];
+        levels[i].index <== pathIndices[i];
+        cur[i + 1] <== levels[i].out;
+    }
+    merkleRoot === cur[depth];
+
+    // scoped nullifier = Poseidon(nullifier, contextHash)
+    component nf = Poseidon(2);
+    nf.inputs[0] <== nullifier;
+    nf.inputs[1] <== contextHash;
+    nullifierHash === nf.out;
+
+    // value >= threshold  (range gate, 64-bit amounts / lamports)
+    component ge = GreaterEqThan(64);
+    ge.in[0] <== value;
+    ge.in[1] <== threshold;
+    ge.out === 1;
+}
