@@ -31,3 +31,50 @@ template MerkleLevel() {
     h.inputs[1] <== muxR.out;
     out <== h.out;
 }
+
+template Withdraw(depth) {
+    // public
+    signal input merkleRoot;
+    signal input value;
+    signal input recipientHash;
+    signal input nullifierHash;
+    // private
+    signal input label;
+    signal input secret;
+    signal input nullifier;
+    signal input pathElements[depth];
+    signal input pathIndices[depth];
+
+    component pc = Poseidon(2);
+    pc.inputs[0] <== nullifier;
+    pc.inputs[1] <== secret;
+
+    component leaf = Poseidon(3);
+    leaf.inputs[0] <== value;
+    leaf.inputs[1] <== label;
+    leaf.inputs[2] <== pc.out;
+
+    component levels[depth];
+    signal cur[depth + 1];
+    cur[0] <== leaf.out;
+    for (var i = 0; i < depth; i++) {
+        levels[i] = MerkleLevel();
+        levels[i].cur <== cur[i];
+        levels[i].sibling <== pathElements[i];
+        levels[i].index <== pathIndices[i];
+        cur[i + 1] <== levels[i].out;
+    }
+    merkleRoot === cur[depth];
+
+    // global single-use nullifier (1-input Poseidon, distinct domain from the gate)
+    component nf = Poseidon(1);
+    nf.inputs[0] <== nullifier;
+    nullifierHash === nf.out;
+
+    // recipientHash is a public input that the PROGRAM binds to the real payout
+    // account (it checks recipientHash == Poseidon(hi16, lo16) of the recipient
+    // pubkey). The circuit only needs to carry it as a public signal; this dummy
+    // constraint keeps the compiler from optimizing the input away.
+    signal rh2;
+    rh2 <== recipientHash * recipientHash;
+}
