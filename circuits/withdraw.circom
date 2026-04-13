@@ -78,3 +78,5 @@ template Withdraw(depth) {
     signal rh2;
     rh2 <== recipientHash * recipientHash;
 }
+
+component main {public [merkleRoot, value, recipientHash, nullifierHash]} = Withdraw(20);
