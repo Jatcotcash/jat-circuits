@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: format and syntax
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: prettier check
+        run: npx --yes prettier --check "scripts/**/*.mjs"
+        continue-on-error: true
+      - name: node syntax check
+        run: |
+          for f in scripts/*.mjs; do node --check "$f"; done
+
+  secrets:
+    name: secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: scan for committed secrets
+        run: |
+          if git grep -nE 'ghp_[A-Za-z0-9]{30}|-----BEGIN (RSA|EC|OPENSSH) PRIVATE KEY-----'; then
+            echo "potential secret found"; exit 1
+          fi
+          echo "no secrets found"
