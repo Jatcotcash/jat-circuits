@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security disclosure
+    url: https://github.com/Jatcotcash/jat-circuits/security/policy
+    about: Report a soundness or commitment-scheme issue privately.
+  - name: On-chain programs
+    url: https://github.com/Jatcotcash/jat-program
+    about: For the verifier, the Merkle tree, or deployment questions.
+  - name: SDK and services
+    url: https://github.com/Jatcotcash/jat-sdk
+    about: For proof generation in the client.
