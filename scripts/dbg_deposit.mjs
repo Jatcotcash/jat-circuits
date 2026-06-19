@@ -3,7 +3,11 @@ import { createHash } from "node:crypto";
 import fs from "node:fs";
 const conn = new Connection("https://api.devnet.solana.com", "confirmed");
 const PROGRAM = new PublicKey("seuH78RmBPVzoKToLQVEZrDvuL5jDNBSbptozWK9PEm");
-const payer = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync("REDACTED"))));
+// Set SEAL_WALLET to your keypair JSON path. No path is hardcoded so nothing about
+// the local machine or key-storage layout is committed.
+const WALLET = process.env.SEAL_WALLET;
+if (!WALLET) { console.error("set SEAL_WALLET=/path/to/keypair.json"); process.exit(1); }
+const payer = Keypair.fromSecretKey(new Uint8Array(JSON.parse(fs.readFileSync(WALLET))));
 const disc = (n) => createHash("sha256").update(`global:${n}`).digest().subarray(0,8);
 const be32 = (d) => Buffer.from(BigInt(d).toString(16).padStart(64,"0"),"hex");
 const u64le = (d) => { const b=Buffer.alloc(8); b.writeBigUInt64LE(BigInt(d)); return b; };
