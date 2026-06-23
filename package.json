@@ -26,12 +26,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Jatcotcash/jat-circuits.git"
+    "url": "git+https://github.com/JatProtocol/jat-circuits.git"
   },
   "bugs": {
-    "url": "https://github.com/Jatcotcash/jat-circuits/issues"
+    "url": "https://github.com/JatProtocol/jat-circuits/issues"
   },
-  "homepage": "https://github.com/Jatcotcash/jat-circuits",
+  "homepage": "https://github.com/JatProtocol/jat-circuits",
   "engines": {
     "node": ">=18.0.0"
   },

@@ -1,21 +1,27 @@
 # jat-circuits
 
 <p>
-  <a href="https://github.com/Jatcotcash/jat-circuits/blob/main/LICENSE">
+  <a href="https://github.com/JatProtocol/jat-circuits/blob/main/LICENSE">
     <img src="https://img.shields.io/badge/license-MIT-4f7799?style=flat-square" alt="license"/>
   </a>
-  <a href="https://github.com/Jatcotcash/jat-circuits/actions/workflows/ci.yml">
-    <img src="https://img.shields.io/github/actions/workflow/status/Jatcotcash/jat-circuits/ci.yml?branch=main&style=flat-square&label=ci" alt="ci"/>
+  <a href="https://github.com/JatProtocol/jat-circuits/actions/workflows/ci.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/JatProtocol/jat-circuits/ci.yml?branch=main&style=flat-square&label=ci" alt="ci"/>
   </a>
   <img src="https://img.shields.io/badge/circom-2.1.6-7aa874?style=flat-square" alt="circom"/>
   <img src="https://img.shields.io/badge/proof-groth16-b8473f?style=flat-square" alt="groth16"/>
   <img src="https://img.shields.io/badge/curve-bn254-d8a657?style=flat-square" alt="bn254"/>
-  <a href="https://github.com/Jatcotcash/jat-circuits/commits/main">
-    <img src="https://img.shields.io/github/last-commit/Jatcotcash/jat-circuits?style=flat-square&color=4f7799" alt="last commit"/>
+  <a href="https://github.com/JatProtocol/jat-circuits/commits/main">
+    <img src="https://img.shields.io/github/last-commit/JatProtocol/jat-circuits?style=flat-square&color=4f7799" alt="last commit"/>
+  </a>
+  <a href="https://www.jat.cash">
+    <img src="https://img.shields.io/badge/site-jat.cash-4f7799?style=flat-square" alt="website"/>
+  </a>
+  <a href="https://x.com/Jat_cash">
+    <img src="https://img.shields.io/badge/X-@Jat__cash-4f7799?style=flat-square" alt="X"/>
   </a>
 </p>
 
-Zero-knowledge circuits for **Jat**, private payments on Solana. These are the Circom
+Zero-knowledge circuits for **Jat**, a proof-of-payment access primitive on Solana. These are the Circom
 circuits and the tooling that turns them into a verifying key the on-chain program checks.
 The originals are in `circuits/` and `scripts/`; `node_modules/circomlib` is a vendored
 build dependency, not first-party.
@@ -59,7 +65,7 @@ flowchart TB
 ## Build
 
 ```bash
-git clone https://github.com/Jatcotcash/jat-circuits
+git clone https://github.com/JatProtocol/jat-circuits
 cd peepy-labs
 npm install
 
@@ -109,5 +115,5 @@ MIT, see [LICENSE](LICENSE).
 
 ## Links
 
-- On-chain programs: https://github.com/Jatcotcash/jat-program
-- SDK and services: https://github.com/Jatcotcash/jat-sdk
+- On-chain programs: https://github.com/JatProtocol/jat-program
+- SDK and services: https://github.com/JatProtocol/jat-sdk
